@@ -8,21 +8,25 @@ data class Formacao(val nome: String, val conteudos: List<Conteudo>, val nivel: 
 
     val inscritos = mutableListOf<Aluno>()
     
-    fun matricular(aluno: Aluno) {
-        inscritos.add(aluno)
-    }
-    
+
     fun imprimirAlunosInscritos(){
         for(user in inscritos){
             println(user.nome)
         }
     }
     
-    fun imprimirConteudoCurricular(){
+     fun imprimirConteudoCurricular(){
         for(cont in conteudos){
             println("${cont.nome} - ${cont.duracao}")
         }
     }
+    
+        fun matricular(aluno: Aluno) {
+        inscritos.add(aluno)
+    }
+    
+    
+   
 }
 
 fun main() {
