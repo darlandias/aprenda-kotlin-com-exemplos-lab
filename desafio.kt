@@ -1,21 +1,55 @@
-// [Template no Kotlin Playground](https://pl.kotl.in/WcteahpyN)
+enum class Nivel {Basico, Intermediario, Avancado}
 
-enum class Nivel { BASICO, INTERMEDIARIO, DIFICIL }
+data class Usuario(val nome: String, val email: String, val usuario: String)
 
-class Usuario
+data class ConteudosEducacionais(val nome: String, val duracao: Int, val nivel: Nivel)
 
-data class ConteudoEducacional(var nome: String, val duracao: Int = 60)
-
-data class Formacao(val nome: String, var conteudos: List<ConteudoEducacional>) {
+data class Formacao(val nome: String, val conteudos: List<ConteudosEducacionais>, val nivel: Nivel) {
 
     val inscritos = mutableListOf<Usuario>()
     
     fun matricular(usuario: Usuario) {
-        TODO("Utilize o parâmetro $usuario para simular uma matrícula (usar a lista de $inscritos).")
+        inscritos.add(usuario)
+    }
+    
+    fun imprimirListaInscritos(){
+        for(user in inscritos){
+            println(user.nome)
+        }
+    }
+    
+    fun imprimirGradeFormacao(){
+        for(cont in conteudos){
+            println("${cont.nome} - ${cont.duracao}")
+        }
     }
 }
 
 fun main() {
-    TODO("Analise as classes modeladas para este domínio de aplicação e pense em formas de evoluí-las.")
-    TODO("Simule alguns cenários de teste. Para isso, crie alguns objetos usando as classes em questão.")
+    
+    val moduloJava = ConteudosEducacionais("Curso de Java", 100, Nivel.Intermediario)
+    val moduloKotlin = ConteudosEducacionais("Curso de Kotlin", 80, Nivel.Intermediario)
+    val moduloDocker = ConteudosEducacionais("Curso de Docker", 50, Nivel.Avancado)
+    
+    val listConteudos = mutableListOf<ConteudosEducacionais>()
+    listConteudos.add(moduloJava)
+    listConteudos.add(moduloKotlin)
+    listConteudos.add(moduloDocker)
+    
+    val formacaoAndroid = Formacao("Formação Backend Developer", listConteudos, Nivel.Avancado)
+    
+    val Mary = Usuario("Mary", "mary@mail.com", "pro")
+    val Lass = Usuario("Lass", "lass@mail.com", "pro")
+    val Ryan = Usuario("Ryan", "ryan@mail.com", "free")
+    
+    formacaoAndroid.matricular(Lass)
+    formacaoAndroid.matricular(Ryan)
+    
+    print("Formação: ")
+    println("${formacaoAndroid.nome} - ${formacaoAndroid.nivel}")
+    println("Disciplinas propostas: ")
+    println(formacaoAndroid.imprimirGradeFormacao())
+    println()
+    println("Lista de inscritos aceitos: ")
+    println(formacaoAndroid.imprimirListaInscritos())
 }
